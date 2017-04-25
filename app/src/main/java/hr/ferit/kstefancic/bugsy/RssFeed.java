@@ -36,7 +36,7 @@ public class RssFeed extends AsyncTask<Void,Void,List<News>>{
     protected void onPostExecute(List<News> newses) {
         super.onPostExecute(newses);
         mProgressDialog.dismiss();
-        Log.d("Tag",newses.get(0).getTitle());
+        mainActivity.setUI(newses);
     }
 
     @Override

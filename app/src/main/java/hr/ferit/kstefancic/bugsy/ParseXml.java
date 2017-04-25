@@ -68,6 +68,9 @@ public class ParseXml {
                        else if(tagName.equals("description") && aNews!=null){
                            aNews.setmDescription(mText);
                        }
+                       else if(tagName.equals("category")&& aNews!=null){
+                           aNews.setmCategory(mText);
+                       }
                        else if(tagName.equals("pubDate") && aNews!=null){
                            aNews.setmPubDate(mText);
                        }

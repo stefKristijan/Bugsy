@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,7 +21,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     List<News> mNews;
     Context mContext;
 
-    public NewsAdapter(ArrayList<News> Newss, Context context){
+    public NewsAdapter(List<News> Newss, Context context){
         this.mNews=Newss;
         this.mContext=context;
     }

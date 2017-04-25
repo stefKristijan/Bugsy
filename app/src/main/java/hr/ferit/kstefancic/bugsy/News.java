@@ -62,8 +62,4 @@ public class News {
         return mCategory;
     }
 
-    @Override
-    public String toString() {
-        return mTitle+" "+mDescription+" "+mPubDate;
-    }
 }

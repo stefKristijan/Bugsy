@@ -4,12 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="hr.ferit.kstefancic.bugsy.MainActivity">
+    tools:context="hr.ferit.kstefancic.bugsy.MainActivity"
+    android:background="@android:color/black">
 
-
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
+    <android.support.v4.widget.SwipeRefreshLayout
         android:layout_height="match_parent"
-        android:id="@+id/rvNews"
-        />
+        android:layout_width="match_parent"
+        android:id="@+id/swipeRecyclerView">
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rvNews"
+            />
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

@@ -35,6 +35,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         return newsViewHolder;
     }
 
+
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 

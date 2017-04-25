@@ -6,12 +6,9 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-import org.w3c.dom.Document;
-
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,28 +17,31 @@ import java.util.List;
 
 public class RssFeed extends AsyncTask<Void,Void,List<News>>{
 
-    private static final String FEED_URL = "http://www.bug.hr/rss/vijesti";
-    Context mContext;
+    private static final String FEED_URL = "http://www.bug.hr/rss/vijesti/";
+    MainActivity mainActivity;
     ProgressDialog mProgressDialog;
     URL url;
 
-    public RssFeed(Context context){
-        this.mContext=context;
-        this.mProgressDialog=new ProgressDialog(context);
+    public RssFeed(MainActivity mainActivity){
+        this.mainActivity=mainActivity;
+        this.mProgressDialog=new ProgressDialog(mainActivity);
         mProgressDialog.setMessage("Loading bug.hr news...");
     }
 
+    public void attach(MainActivity activity) {this.mainActivity=activity;}
+
+    public void detach(){this.mainActivity=null;}
+
     @Override
     protected void onPostExecute(List<News> newses) {
+        super.onPostExecute(newses);
         mProgressDialog.dismiss();
         Log.d("Tag",newses.get(0).getTitle());
-        super.onPostExecute(newses);
-
     }
 
     @Override
     protected List<News> doInBackground(Void... params) {
-        return getData();
+       return getData();
     }
 
     @Override
@@ -63,9 +63,7 @@ public class RssFeed extends AsyncTask<Void,Void,List<News>>{
             InputStream inputStream = connection.getInputStream();
             ParseXml xmlParser = new ParseXml();
             return xmlParser.parse(inputStream);
-
         } catch (Exception e) {
-            Toast.makeText(mContext,"Something went wrong. Please try again!",Toast.LENGTH_LONG).show();
             e.printStackTrace();
             return null;
         }

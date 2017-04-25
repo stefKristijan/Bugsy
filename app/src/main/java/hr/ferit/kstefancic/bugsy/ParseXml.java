@@ -1,6 +1,8 @@
 package hr.ferit.kstefancic.bugsy;
 
 
+import android.util.Log;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
@@ -15,7 +17,7 @@ import java.util.List;
 public class ParseXml {
 
     private List<News> mNews;
-    private News aNews;
+    private News aNews=null;
     private String mText;
 
    public ParseXml(){
@@ -44,7 +46,7 @@ public class ParseXml {
                String tagName = parser.getName();
                switch (eventType){
                    case XmlPullParser.START_TAG:
-                       if(tagName.equalsIgnoreCase("item")){
+                       if(tagName.equals("item")){
                            aNews = new News();
                        }
                        break;
@@ -54,22 +56,22 @@ public class ParseXml {
                        break;
 
                    case XmlPullParser.END_TAG:
-                       if(tagName.equalsIgnoreCase("item")){
+                       if(tagName.equals("item") && aNews!=null){
                            mNews.add(aNews);
                        }
-                       else if(tagName.equalsIgnoreCase("title")){
+                       else if(tagName.equals("title") && aNews!=null){
                            aNews.setmTitle(mText);
                        }
-                       else if(tagName.equalsIgnoreCase("link")){
+                       else if(tagName.equals("link") && aNews!=null){
                            aNews.setmLink(mText);
                        }
-                       else if(tagName.equalsIgnoreCase("description")){
+                       else if(tagName.equals("description") && aNews!=null){
                            aNews.setmDescription(mText);
                        }
-                       else if(tagName.equalsIgnoreCase("pubDate")){
+                       else if(tagName.equals("pubDate") && aNews!=null){
                            aNews.setmPubDate(mText);
                        }
-                       else if(tagName.equalsIgnoreCase("enclosure")){
+                       else if(tagName.equals("enclosure") && aNews!=null){
                            String url = parser.getAttributeValue(null,"url");
                            aNews.setmNewsImage(url);
                        }

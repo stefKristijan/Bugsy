@@ -1,0 +1,89 @@
+package hr.ferit.kstefancic.bugsy;
+
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by Kristijan on 25.4.2017..
+ */
+
+public class ParseXml {
+
+    private List<News> mNews;
+    private News aNews;
+    private String mText;
+
+   public ParseXml(){
+       mNews = new ArrayList<News>();
+   }
+
+    public List<News> getNews() {
+        return mNews;
+    }
+
+   public List<News> parse(InputStream inputStream){
+       XmlPullParserFactory factory = null;
+       XmlPullParser parser = null;
+
+       try {
+           factory=XmlPullParserFactory.newInstance();
+           factory.setNamespaceAware(true);
+
+           parser = factory.newPullParser();
+           parser.setInput(inputStream,null);
+
+           int eventType = parser.getEventType();
+
+           while(eventType != XmlPullParser.END_DOCUMENT){
+
+               String tagName = parser.getName();
+               switch (eventType){
+                   case XmlPullParser.START_TAG:
+                       if(tagName.equalsIgnoreCase("item")){
+                           aNews = new News();
+                       }
+                       break;
+
+                   case XmlPullParser.TEXT:
+                       mText = parser.getText();
+                       break;
+
+                   case XmlPullParser.END_TAG:
+                       if(tagName.equalsIgnoreCase("item")){
+                           mNews.add(aNews);
+                       }
+                       else if(tagName.equalsIgnoreCase("title")){
+                           aNews.setmTitle(mText);
+                       }
+                       else if(tagName.equalsIgnoreCase("link")){
+                           aNews.setmLink(mText);
+                       }
+                       else if(tagName.equalsIgnoreCase("description")){
+                           aNews.setmDescription(mText);
+                       }
+                       else if(tagName.equalsIgnoreCase("pubDate")){
+                           aNews.setmPubDate(mText);
+                       }
+                       else if(tagName.equalsIgnoreCase("enclosure")){
+                           String url = parser.getAttributeValue(null,"url");
+                           aNews.setmNewsImage(url);
+                       }
+                       break;
+                   default:
+                       break;
+               }
+               eventType=parser.next();
+           }
+
+       } catch (Exception e) {
+           e.printStackTrace();
+           return null;
+       }
+       return mNews;
+   }
+}

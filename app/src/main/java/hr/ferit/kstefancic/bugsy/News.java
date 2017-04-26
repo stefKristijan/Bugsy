@@ -13,6 +13,7 @@ public class News {
     private String mNewsImage;
     private String mDescription;
     private String mCategory;
+    private boolean mIsSelected;
 
     public News(){}
 
@@ -24,7 +25,14 @@ public class News {
         this.mDescription = mDescription;
         this.mCategory = mCategory;
     }
+    public void setmIsSelected(boolean mIsSelected) {
+        this.mIsSelected = mIsSelected;
+    }
 
+    public boolean ismIsSelected() {
+
+        return mIsSelected;
+    }
     public void setmTitle(String mTitle) {
         this.mTitle = mTitle;
     }

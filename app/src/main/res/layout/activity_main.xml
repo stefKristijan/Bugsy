@@ -21,5 +21,16 @@
         android:src="@android:drawable/ic_menu_search"
         app:backgroundTint="@color/darkGrey"
         />
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:layout_margin="10dp"
+        android:alpha="0.9"
+        android:clickable="true"
+        android:src="@android:drawable/ic_menu_save"
+        app:backgroundTint="@android:color/holo_red_dark"
+        />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,7 +36,7 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
     RecyclerView.ItemDecoration mItemDecoration;
     Spinner mSpinnerCategories;
     List<News> mNews;
-
+    FloatingActionButton fab, fabSave;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +74,8 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
                     setUpRecyclerView(mNews);
                 }
                 else if(selectedCategory==SQLDATABASE){
-
+                    selectedNews = NewsDBHelper.getInstance(getApplicationContext()).getAllNews();
+                    setUpRecyclerView(selectedNews);
                 }
                 else {
                     for (int i = 0; i < mNews.size(); i++) {
@@ -93,8 +95,18 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
             }
         });
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        setUpFloatingButtons();
+
+        if(swipeRecyclerView.isRefreshing()){
+            swipeRecyclerView.setRefreshing(false);
+        }
+
+
+    }
+
+    private void setUpFloatingButtons() {
+        this.fab = (FloatingActionButton) findViewById(R.id.fab);
+        this.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(mSpinnerCategories.getVisibility()==View.GONE) {
@@ -105,12 +117,19 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
             }
         });
 
-
-        if(swipeRecyclerView.isRefreshing()){
-            swipeRecyclerView.setRefreshing(false);
-        }
-
-
+        this.fabSave= (FloatingActionButton) findViewById(R.id.fabSave);
+        this.fabSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for(int i=0; i<mNews.size();i++){
+                    News aNews=mNews.get(i);
+                    if(aNews.ismIsSelected()){
+                        NewsDBHelper.getInstance(getApplicationContext()).insertNews(aNews);
+                        mNews.get(i).setmIsSelected(false);
+                    }
+                }
+            }
+        });
     }
 
     private void setUpRecyclerView(List<News> newses) {

@@ -18,7 +18,6 @@
         android:layout_height="wrap_content"
         android:background="@color/lightGrey"
         android:id="@+id/cbSelect"
-        android:visibility="gone"
         />
 
     <RelativeLayout

@@ -14,6 +14,15 @@ public class News {
     private String mDescription;
     private String mCategory;
 
+    public News(String mTitle, String mLink, String mPubDate, String mNewsImage, String mDescription, String mCategory) {
+        this.mTitle = mTitle;
+        this.mLink = mLink;
+        this.mPubDate = mPubDate;
+        this.mNewsImage = mNewsImage;
+        this.mDescription = mDescription;
+        this.mCategory = mCategory;
+    }
+
     public void setmTitle(String mTitle) {
         this.mTitle = mTitle;
     }

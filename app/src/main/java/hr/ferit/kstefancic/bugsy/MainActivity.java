@@ -26,10 +26,10 @@ import static hr.ferit.kstefancic.bugsy.R.id.spinnerCategories;
 
 public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefreshListener {
 
-    private static final String ALL = "All categories";
-    private static final String SQLDATABASE = "Saved news";
-    private static final String SUCCESS = "News successfuly added to your database!";
-    private static final String LOADING = "Loading news...";
+    private static final String ALL = "Sve kategorije";
+    private static final String SQLDATABASE = "Spremljene vijesti";
+    private static final String SUCCESS = "Vijesti uspješno spremljene na uređaj";
+    private static final String LOADING = "Učitavanje vijesti...";
     private RssFeed rssFeed;
 
     SwipeRefreshLayout swipeRecyclerView;
@@ -131,16 +131,20 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
         this.fabSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                boolean checkedExists=false;
                 for(int i=0; i<mNews.size();i++){
                     News aNews=mNews.get(i);
                     if(aNews.ismIsSelected()){
+                        checkedExists=true;
                         NewsDBHelper.getInstance(getApplicationContext()).insertNews(aNews);
                         mNews.get(i).setmIsSelected(false);
                     }
                 }
-                Toast.makeText(getApplicationContext(),SUCCESS,Toast.LENGTH_SHORT).show();
-                mSpinnerCategories.setSelection(1);
-                mSpinnerCategories.setVisibility(View.VISIBLE);
+                if(checkedExists) {
+                    Toast.makeText(getApplicationContext(), SUCCESS, Toast.LENGTH_SHORT).show();
+                    mSpinnerCategories.setSelection(1);
+                    mSpinnerCategories.setVisibility(View.VISIBLE);
+                }
             }
         });
     }

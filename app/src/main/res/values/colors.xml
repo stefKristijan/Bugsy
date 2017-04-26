@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="lightGrey">#555</color>
     <color name="darkGrey">#222</color>
+    <color name="titleBackgrndCol">#80000000</color>
 </resources>

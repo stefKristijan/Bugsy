@@ -13,7 +13,7 @@
         android:layout_height="50dp"
         android:background="@color/cardview_light_background"
         android:id="@+id/spinnerCategories"
-        android:padding="10dp"
+        android:padding="@dimen/spinnerPad"
         android:visibility="gone"
         />
 

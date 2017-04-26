@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="cardMargin">10dp</dimen>
+    <dimen name="titleTextSize">20sp</dimen>
+    <dimen name="spinnerPad">10dp</dimen>
 </resources>

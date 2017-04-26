@@ -33,6 +33,7 @@ public class News {
         this.mNewsImage = mNewsImage;
         this.mDescription = mDescription;
         this.mCategory = mCategory;
+        this.mIsSelected=false;
     }
     public void setmIsSelected(boolean mIsSelected) {
         this.mIsSelected = mIsSelected;

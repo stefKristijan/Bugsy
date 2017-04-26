@@ -14,6 +14,8 @@ public class News {
     private String mDescription;
     private String mCategory;
 
+    public News(){}
+
     public News(String mTitle, String mLink, String mPubDate, String mNewsImage, String mDescription, String mCategory) {
         this.mTitle = mTitle;
         this.mLink = mLink;

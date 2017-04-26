@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="hr.ferit.kstefancic.bugsy.MainActivity"
+    android:background="@android:color/black">
+
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/cardview_light_background"
+        android:id="@+id/spinnerCategories"
+        android:padding="10dp"
+        />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:id="@+id/swipeRecyclerView">
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rvNews"
+            />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</LinearLayout>

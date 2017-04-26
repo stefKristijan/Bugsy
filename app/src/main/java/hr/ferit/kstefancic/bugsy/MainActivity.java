@@ -1,6 +1,7 @@
 package hr.ferit.kstefancic.bugsy;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,6 +28,8 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
 
     private static final String ALL = "All categories";
     private static final String SQLDATABASE = "Saved news";
+    private static final String SUCCESS = "News successfuly added to your database!";
+    private static final String LOADING = "Loading news...";
     private RssFeed rssFeed;
 
     SwipeRefreshLayout swipeRecyclerView;
@@ -37,11 +40,17 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
     Spinner mSpinnerCategories;
     List<News> mNews;
     FloatingActionButton fab, fabSave;
+    boolean cbVisible=false;
+    ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        this.mProgressDialog = new ProgressDialog(this);
+        this.mProgressDialog.setMessage(LOADING);
+        this.mProgressDialog.show();
 
         this.swipeRecyclerView= (SwipeRefreshLayout) findViewById(R.id.swipeRecyclerView);
         swipeRecyclerView.setOnRefreshListener(this);
@@ -62,7 +71,7 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
         this.mSpinnerCategories = (Spinner) findViewById(R.id.spinnerCategories);
         setUpSpinner(mNews);
 
-        setUpRecyclerView(mNews);
+        setUpRecyclerView(mNews,cbVisible);
 
         mSpinnerCategories.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -71,11 +80,11 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
                 List<News> selectedNews = new ArrayList<News>();
 
                 if(selectedCategory==ALL) {
-                    setUpRecyclerView(mNews);
+                    setUpRecyclerView(mNews,cbVisible);
                 }
                 else if(selectedCategory==SQLDATABASE){
                     selectedNews = NewsDBHelper.getInstance(getApplicationContext()).getAllNews();
-                    setUpRecyclerView(selectedNews);
+                    setUpRecyclerView(selectedNews,cbVisible);
                 }
                 else {
                     for (int i = 0; i < mNews.size(); i++) {
@@ -84,7 +93,7 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
                             selectedNews.add(aNews);
                         }
                     }
-                    setUpRecyclerView(selectedNews);
+                    setUpRecyclerView(selectedNews,cbVisible);
                 }
                 mSpinnerCategories.setVisibility(View.GONE);
             }
@@ -101,7 +110,8 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
             swipeRecyclerView.setRefreshing(false);
         }
 
-
+        mProgressDialog.dismiss();
+        mSpinnerCategories.setVisibility(View.VISIBLE);
     }
 
     private void setUpFloatingButtons() {
@@ -128,14 +138,17 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
                         mNews.get(i).setmIsSelected(false);
                     }
                 }
+                Toast.makeText(getApplicationContext(),SUCCESS,Toast.LENGTH_SHORT).show();
+                mSpinnerCategories.setSelection(1);
+                mSpinnerCategories.setVisibility(View.VISIBLE);
             }
         });
     }
 
-    private void setUpRecyclerView(List<News> newses) {
+    private void setUpRecyclerView(List<News> newses, boolean checkBoxesVisible) {
 
         Context context = getApplicationContext();
-        this.mNewsAdapter = new NewsAdapter(newses ,context);
+        this.mNewsAdapter = new NewsAdapter(newses ,context,checkBoxesVisible);
         this.mLayoutManager = new LinearLayoutManager(context);
         this.mItemDecoration = new DividerItemDecoration(context,DividerItemDecoration.VERTICAL);
 

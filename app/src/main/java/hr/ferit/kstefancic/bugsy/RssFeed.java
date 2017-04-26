@@ -19,13 +19,10 @@ public class RssFeed extends AsyncTask<Void,Void,List<News>>{
 
     private static final String FEED_URL = "http://www.bug.hr/rss/vijesti/";
     MainActivity mainActivity;
-    ProgressDialog mProgressDialog;
     URL url;
 
     public RssFeed(MainActivity mainActivity){
         this.mainActivity=mainActivity;
-        this.mProgressDialog=new ProgressDialog(mainActivity);
-        mProgressDialog.setMessage("Loading bug.hr news...");
     }
 
     public void attach(MainActivity activity) {this.mainActivity=activity;}
@@ -35,7 +32,6 @@ public class RssFeed extends AsyncTask<Void,Void,List<News>>{
     @Override
     protected void onPostExecute(List<News> newses) {
         super.onPostExecute(newses);
-        mProgressDialog.dismiss();
         mainActivity.setUI(newses);
     }
 

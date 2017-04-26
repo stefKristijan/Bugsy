@@ -30,9 +30,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     Context mContext;
     boolean cbVisible=false;
 
-    public NewsAdapter(List<News> Newss, Context context){
+    public NewsAdapter(List<News> Newss, Context context, boolean cbVisible){
         this.mNews=Newss;
         this.mContext=context;
+        this.cbVisible=cbVisible;
+
     }
 
     @Override
@@ -52,7 +54,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         Log.d("USER","onBindViewHolder");
         final News aNews = this.mNews.get(position);
@@ -88,6 +90,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                 return true;
             }
         });
+
+        holder.cbSelect.setChecked(aNews.ismIsSelected());
+
         holder.cbSelect.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

@@ -1,5 +1,14 @@
 package hr.ferit.kstefancic.bugsy;
 
+import android.annotation.TargetApi;
+import android.icu.text.SimpleDateFormat;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+
+import java.text.ParseException;
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * Created by Kristijan on 24.4.2017..
  */
@@ -42,7 +51,15 @@ public class News {
     }
 
     public void setmPubDate(String mPubDate) {
-        this.mPubDate = mPubDate;
+        java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("EE, dd MMM yyyy HH:mm:ss z",Locale.ENGLISH);
+        Date pubDate = null;
+        try {
+            pubDate = dateFormat.parse(mPubDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        java.text.SimpleDateFormat timeFormat = new java.text.SimpleDateFormat("dd. MMMM, yyyy. - HH:mm");
+        this.mPubDate = timeFormat.format(pubDate);
     }
 
     public void setmNewsImage(String mNewsImage) {

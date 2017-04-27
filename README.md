@@ -11,4 +11,15 @@ U klasi ParseXml se na temelju InputStream objekta dobiveni podaci parsiraju i s
 Nakon dohvaæanja svih vijesti poziva se metoda onPostExecute() klase RssFeed iz koje se poziva metoda setUI() klase MainActivity. U MainActivity-u se nakon izvoðenja niti tj. vraæanja liste objekata News sve kategorije postavljaju u objekt klase Spinner pomoæu kojeg se odabiru kategorije koje æe se prikazati u RecyclerView-u. Nakon toga se postavlja RecyclerView kojem se uz listu objekata klase News i objekta klase Context šalje i boolean varijabla koja oznaèava koji ViewHolder æe se koristiti. Ukoliko je boolean varijabla jednaka "false" tada se kreira ViewHolder koji ne sadrži checkBox-ove, a ukoliko se proslijedi "true" kreira se ViewHolder koji uz lijevi rub ekrana prikazuje checkBox-ove. Potreba za korištenjem dva ViewHolder-a se pojavila zbog višestrukog odabira objekata iz RecyclerView-a. Prilikom dugog klika na bilo koji element RecyclerView-a kreira se ViewHolder s checkBox-ovima koje je moguæe oznaèiti, a pritiskom na FloatingActionButton za spremanje u bazu, odabrani objekti se spremaju u lokalnu bazu podataka. Kako bi se saznalo koji objekti su oznaèeni bilo je potrebno u klasu News dodati i boolean atribut koji govori je li objekt oznaèen ili nije. 
 
 U aplikaciji je dostupno i "pull to refresh" osvježavanje vijesti pomoæu widget-a SwipeRefreshLayout. Funkcionalnost je postignuta vrlo lako, nakon instanciranja objekta potrebno je postaviti metodu setOnRefreshListener() u kojoj se odredi što aplikacija treba napraviti prilikom osvježavanja (ponovno uèitavanje podataka s bug.hr). Prilikom aktiviranja osvježavanja pojavi se "progressBar" koji je nakon uèitavanja podataka potrebno maknuti, a to se radi metodom setRefreshing(false).
-Lokalna baza podataka radi na istom principu kao baza podataka prikana na vježbama.
+Lokalna baza podataka radi na istom principu kao baza podataka prikazana na vježbama.
+
+Korišteni resursi:
+http://stackoverflow.com/questions/42534954/how-to-change-layout-for-all-items-in-recyclerview --> Rješenje suèelja koje ima dva RecyclerView-a
+
+http://stackoverflow.com/questions/32159724/scroll-to-top-in-recyclerview-with-linearlayoutmanager --> vraæanje na vrh liste
+
+https://www.youtube.com/watch?v=1clUga356ms --> XMLPullParser
+
+https://developer.android.com/training/basics/network-ops/xml.html#instantiate
+
+https://www.youtube.com/watch?v=2lcBx4KVUVk --> pull to refresh
